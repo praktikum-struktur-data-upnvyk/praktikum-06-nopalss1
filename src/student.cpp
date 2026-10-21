@@ -72,53 +72,57 @@ string display(const Queue& q) {
 // SOAL 1 — enqueue()                                                  35 poin
 // =============================================================================
 bool enqueue(Queue& q, int nomor) {
-    node* baru = new node;
-    baru -> data = nilai;
-    baru -> next = nullptr;
-    if (isempty(q)) {
-        q.front = baru;
+    Node* baru = new Node;
+    baru->data = nomor;
+    baru->next = NULL;
+
+    if (isEmpty(q)) {
+        q.depan = baru;
+        q.belakang = baru;
     } else {
-        q.rear -> next = baru;
+        q.belakang->next = baru;
+        q.belakang = baru;
     }
-    q.rear = baru;
-    q.count++;
-    cout << "nilai yang dimasukkan: " << nilai << endl;
+
     return true;
 }
+
 
 // =============================================================================
 // SOAL 2 — dequeue()                                                  40 poin
 // =============================================================================
 bool dequeue(Queue& q, int& nomor) {
-    if (isempty(q)) {
-        cout << "antrian masih kosong..." << endl;
+    if (isEmpty(q))
+    {
+        cout << "masih kosong";
         return false;
     }
-    node* bantu = q.front;
-    int nilai = bantu -> data;
-    q.front = bantu -> next;
-    q.count--;
-    if (isempty(q)) {
-        q.front = nullptr;
-        q.rear = nullptr;
+    Node* bantu = q.depan;
+    nomor = bantu->data;
+    q.depan = q.depan->next;
+
+    if (q.depan == NULL) {
+        q.belakang = NULL;
     }
-    cout << "nilai yang dikeluarkan: " << nilai << endl;
-    return true;
+
     delete bantu;
+    return true;
 }
+
 
 // =============================================================================
 // SOAL 3 — clear()                                                    25 poin
 // =============================================================================
 void clear(Queue& q) {
-    node* current = q.front;
-    while (current != nullptr) {
-        node* bantu = current;
-        current = current -> next;
-     }
-     q.depan = NULL;
-     q.belakang = NULL;
-     delete bantu;
+     Node* current = q.depan;
+
+    while (current != NULL) {
+        Node* bantu = current;
+        current = current->next;
+        delete bantu;
+    }
+
+    inisialisasi(q);
 }
 
 // =============================================================================
